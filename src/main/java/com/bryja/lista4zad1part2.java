@@ -11,8 +11,19 @@ public class lista4zad1part2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int ktory = 0;
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
         Cookie nef[]=request.getCookies();
         String numer = request.getParameter("numer");
+        if(nef==null){
+            Cookie ck=new Cookie("na",numer);//creating cookie object
+            response.addCookie(ck);//adding cookie in the response
+            ck.setPath("/");
+            ck.setMaxAge(99*99*99);
+            out.println("<h3>Numer wynosi teraz: "+numer+"</h3>");
+            out.close();
+            return;
+        }
         for(int i=0;i<nef.length;i++){
             if(nef[i].getName().equals("na")){
                 ktory=i;
@@ -25,8 +36,6 @@ public class lista4zad1part2 extends HttpServlet {
                 ck.setMaxAge(99*99*99);
             }
         }
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
         if(isNumeric(numer)){
 
             System.out.println(numer);
