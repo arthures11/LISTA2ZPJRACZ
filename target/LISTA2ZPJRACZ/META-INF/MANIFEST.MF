@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
-Built-By: Administrator
-Build-Jdk: 18.0.2
+Built-By: arthur
+Build-Jdk: Amazon Corretto version 18.0.2
 

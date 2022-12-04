@@ -1,8 +1,9 @@
 <!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
-<web-app>
 
+
+<web-app>
   <display-name>Archetype Created Web Application</display-name>
   <context-param>
     <param-name>KostkaLoseValue</param-name>
@@ -17,7 +18,10 @@
     <param-value>50</param-value>
   </context-param>
 
-
+  <context-param>
+    <param-name>LiczbaPostow</param-name>
+    <param-value>10</param-value>
+  </context-param>
 
   <context-param>
     <param-name>Login</param-name>
@@ -27,7 +31,9 @@
     <param-name>Password</param-name>
     <param-value>kox</param-value>
   </context-param>
-
+  <listener>
+    <listener-class>com.bryja.Counter</listener-class>
+  </listener>
 
 </web-app>
 
