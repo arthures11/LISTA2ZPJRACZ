@@ -3,10 +3,7 @@ package com.bryja;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +38,21 @@ public class logowanie extends HttpServlet {
                 }
             }
         }
-        String ipAddress = request.getHeader("X-FORWARDED-FOR");
-        if (ipAddress == null) {
-            ipAddress = request.getRemoteAddr();
-            System.out.println("NIEUDANA PROBA LOGOWANIA: "+ipAddress);
+
+        File log = new File("log.txt");
+        try{
+            if(log.exists()==false){
+                System.out.println("We had to make a new file.");
+                log.createNewFile();
+            }
+            PrintWriter out = new PrintWriter(new FileWriter(log, true));
+            out.append(getClientIpAddress(request)+"\n");
+            out.close();
+        }catch(IOException e){
+            System.out.println("COULD NOT LOG!!");
         }
+
+
         request.setAttribute("error", "invalid login");
         response.sendRedirect(request.getContextPath() + "/home.jsp?error=login");
         return;
@@ -54,5 +61,29 @@ public class logowanie extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
+
+    private static final String[] HEADERS_TO_TRY = {
+            "X-Forwarded-For",
+            "Proxy-Client-IP",
+            "WL-Proxy-Client-IP",
+            "HTTP_X_FORWARDED_FOR",
+            "HTTP_X_FORWARDED",
+            "HTTP_X_CLUSTER_CLIENT_IP",
+            "HTTP_CLIENT_IP",
+            "HTTP_FORWARDED_FOR",
+            "HTTP_FORWARDED",
+            "HTTP_VIA",
+            "REMOTE_ADDR" };
+
+    private String getClientIpAddress(HttpServletRequest request) {
+        for (String header : HEADERS_TO_TRY) {
+            String ip = request.getHeader(header);
+            if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
+                return ip;
+            }
+        }
+
+        return request.getRemoteAddr();
     }
 }
