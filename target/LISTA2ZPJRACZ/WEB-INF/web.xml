@@ -4,6 +4,7 @@
 
 
 <web-app>
+
   <display-name>Archetype Created Web Application</display-name>
   <context-param>
     <param-name>KostkaLoseValue</param-name>
@@ -34,8 +35,16 @@
   <listener>
     <listener-class>com.bryja.Counter</listener-class>
   </listener>
-
+  <servlet>
+    <servlet-name>home</servlet-name>
+    <jsp-file>/home.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>home</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
 </web-app>
+
 
 
 

@@ -27,6 +27,9 @@ public class Counter implements HttpSessionListener {
     public static void addSession(){
         activeSessions.incrementAndGet();
     }
+    public static void removeSession(){
+        activeSessions.decrementAndGet();
+    }
     public static int getActiveSessions() {
         return activeSessions.get();
     }

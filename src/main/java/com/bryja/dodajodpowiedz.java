@@ -39,7 +39,7 @@ public class dodajodpowiedz extends HttpServlet {
 
          o.close();
          f.close();
-        response.sendRedirect(request.getContextPath() + "/home.jsp");
+        response.sendRedirect(request.getContextPath() + "/home");
 
     }
 

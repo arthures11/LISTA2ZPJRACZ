@@ -33,7 +33,7 @@ public class logowanie extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", userzy.get(i));
                    // response.sendRedirect(request.getParameter("origin"));
-                    response.sendRedirect(request.getContextPath() + "/home.jsp");
+                    response.sendRedirect(request.getContextPath() + "/home");
                     return;
                 }
             }
@@ -54,7 +54,7 @@ public class logowanie extends HttpServlet {
 
 
         request.setAttribute("error", "invalid login");
-        response.sendRedirect(request.getContextPath() + "/home.jsp?error=login");
+        response.sendRedirect(request.getContextPath() + "/home?error=login");
         return;
     }
 

@@ -28,15 +28,18 @@ public class dodajpytanie extends HttpServlet {
         }
         oi.close();
         fi.close();
+
         posty.add(new Post(posty.size(),tresc, autor, dtf.format(now), 0));
 
         FileOutputStream f = new FileOutputStream(new File("posts.ser"));
         ObjectOutputStream o = new ObjectOutputStream(f);
         o.writeObject(posty);
-
         o.close();
         f.close();
-        response.sendRedirect(request.getContextPath() + "/home.jsp");
+       // HttpSession session = request.getSession();
+       // User logged = (User)session.getAttribute("user");
+       // logged.getPosty().add()
+        response.sendRedirect(request.getContextPath() + "/home");
     }
 
     @Override

@@ -29,7 +29,7 @@ public class rejestrowanie extends HttpServlet {
             if(userzy.get(i).getUsername().equals(key)){
                 System.out.println("ten uzytkownik juz istnieje");
                 RequestDispatcher dispatcher = request.getSession().getServletContext()
-                        .getRequestDispatcher("/home.jsp");
+                        .getRequestDispatcher("/home");
                 dispatcher.forward(request, response);
                 return;
             }
@@ -42,6 +42,8 @@ public class rejestrowanie extends HttpServlet {
 
         o.close();
         f.close();
+        RequestDispatcher dispatcher = request.getSession().getServletContext()
+                .getRequestDispatcher("/home");
     }
 
     @Override
