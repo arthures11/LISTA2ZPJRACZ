@@ -61,6 +61,50 @@ public class MojZnacznik extends SimpleTagSupport {
                     "   <input type=\"hidden\" id=\"odpowiedzid\" name=\"odpowiedzid\" value ="+odpowiedzid+">\n"+
                     "   <button type=\"submit\">Oceń</button>\n" +
                     "</form>");
+
+            int asd = ocenka / 2 ;
+            out.println("<style>\n" +
+                    "  .rating {\n" +
+                    "    display: flex;\n" +
+                    "    flex-direction: row-reverse;\n" +
+                    "  }\n" +
+                    "  .rating > label {\n" +
+                    "    color: #ffc107;\n" +
+                    "    font-size: 50px;\n" +
+                    "    position: relative;\n" +
+                    "  }\n" +
+                    "  .rating > label:before {\n" +
+                    "    content: '\\2606';\n" +
+                    "}\n" +
+                    "</style>\n" +
+                    "<div class=\"rating\">\n" +
+                    "  <label style=\"color: #ffc107;\" class=\"star"+((3+postid+(odpowiedzid+5))*5)+"\"></label>\n" +
+                    "  <label style=\"color: #ffc107;\" class=\"star"+((3+postid+(odpowiedzid+5))*5-1)+"\"></label>\n" +
+                    "  <label style=\"color: #ffc107;\" class=\"star"+((3+postid+(odpowiedzid+5))*5-2)+"\"></label>\n" +
+                    "  <label style=\"color: #ffc107;\" class=\"star"+((3+postid+(odpowiedzid+5))*5-3)+"\"></label>\n" +
+                    "  <label style=\"color: #ffc107;\" class=\"star"+((3+postid+(odpowiedzid+5))*5-4)+"\"></label>\n" +
+                    "</div>\n" +
+                    "\n" +
+                    "<script>\n" +
+                    "var rat = "+asd+";\n" +
+                    " rat = "+asd+";\n" +
+                            "for(let i="+((3+postid+(odpowiedzid+5))*5-4)+";i<="+((3+postid+(odpowiedzid+5))*5)+";i++){\n" +
+                            "    if(rat==0){\n" +
+                    "var x = document.getElementsByClassName('star'+i);\n" +
+                    "for( var q = 0; q < x.length; q++ ) {\n" +
+                    "    x[q].style.color='gray';\n" +
+                            "    }\n" +
+                             "    }\n" +
+                            "    else{\n" +
+                            "        rat--;\n" +
+                            "var x = document.getElementsByClassName('star'+i);\n" +
+                            "for( var w = 0; w < x.length; w++ ) {\n" +
+                            "    x[w].style.color='gold';\n" +
+                            "}\n"+
+                            "    }\n" +
+                            "    \n" +
+                            "}\n" +
+                    "  </script>");
         } catch (IOException e) {
 
             e.printStackTrace();

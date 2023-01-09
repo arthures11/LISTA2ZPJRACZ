@@ -127,7 +127,9 @@
                                             <p class ="fw-bold mb-0" style="margin-left: -10px;"><%=posty.get(i).getOdps().get(a).getAuthor()%></p>
                                             <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-left: -22px;">
                                                 <div style="margin-left: -10px;">
+                                                    <%if(logged!=null){%>
                                                     <znacznik:mojZnacznik postid="<%=i%>" odpowiedzid="<%=a%>"/>
+                                                    <%}%>
                                                     <p class=" mb-0, "><%=posty.get(i).getOdps().get(a).getTresc()%></p>
                                                 </div>
                                             </div>
@@ -187,7 +189,9 @@
                                             <p class ="fw-bold mb-0" style="margin-left: -10px;"><%=posty.get(i).getOdps().get(a).getAuthor()%></p>
                                             <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-left: -22px;">
                                                 <div style="margin-left: -10px;">
+                                                    <%if(logged!=null){%>
                                                     <znacznik:mojZnacznik postid="<%=i%>" odpowiedzid="<%=a%>"/>
+                                                    <%}%>
                                                     <p class=" mb-0, "><%=posty.get(i).getOdps().get(a).getTresc()%></p>
                                                 </div>
                                             </div>
@@ -384,7 +388,9 @@
                                             <p class ="fw-bold mb-0" style="margin-left: -10px;"><%=posty.get(i).getOdps().get(a).getAuthor()%></p>
                                             <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-left: -22px;">
                                                 <div style="margin-left: -10px;">
+                                                    <%if(logged!=null){%>
                                                     <znacznik:mojZnacznik postid="<%=i%>" odpowiedzid="<%=a%>"/>
+                                                    <%}%>
                                                     <p class=" mb-0, "><%=posty.get(i).getOdps().get(a).getTresc()%></p>
                                                 </div>
                                             </div>
