@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="znacznik" uri="/WEB-INF/tld" %>
 
 
 <%
@@ -26,11 +27,13 @@
     }
     oi.close();
     fi.close();
-    //posty.add(new Post(0,"Ile to jest 2+2?","artur", "2022/12/04 00:56:31",0));
 
-    //FileOutputStream f = new FileOutputStream(new File("posts.ser"));
-    // ObjectOutputStream o = new ObjectOutputStream(f);
-    // o.writeObject(posty);
+
+   // posty.add(new Post(0,"Ile to jest 2+2?","artur", "2022/12/04 00:56:31",0));
+
+   // FileOutputStream f = new FileOutputStream(new File("posts.ser"));
+   //  ObjectOutputStream o = new ObjectOutputStream(f);
+   //  o.writeObject(posty);
 
     // o.close();
     //  f.close();
@@ -124,6 +127,7 @@
                                             <p class ="fw-bold mb-0" style="margin-left: -10px;"><%=posty.get(i).getOdps().get(a).getAuthor()%></p>
                                             <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-left: -22px;">
                                                 <div style="margin-left: -10px;">
+                                                    <znacznik:mojZnacznik postid="<%=i%>" odpowiedzid="<%=a%>"/>
                                                     <p class=" mb-0, "><%=posty.get(i).getOdps().get(a).getTresc()%></p>
                                                 </div>
                                             </div>
@@ -136,7 +140,7 @@
                             </div>
                             <%if(logged!=null){%>
                             <form action="/dodajodpowiedz">
-                                <textarea id="tresc3" name="tresc3" rows="4" cols="50">odpowiedź</textarea>
+                                <center><textarea id="tresc3" name="tresc3" rows="4" cols="50">odpowiedź</textarea></center>
                                 <input type="hidden" id="author3" name="author3" value="<%=logged.getUsername()%>" />
                                 <input type="hidden" id="postid3" name="postid3" value="<%=posty.get(i).getId()%>" />
                                 <br>
@@ -183,6 +187,7 @@
                                             <p class ="fw-bold mb-0" style="margin-left: -10px;"><%=posty.get(i).getOdps().get(a).getAuthor()%></p>
                                             <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-left: -22px;">
                                                 <div style="margin-left: -10px;">
+                                                    <znacznik:mojZnacznik postid="<%=i%>" odpowiedzid="<%=a%>"/>
                                                     <p class=" mb-0, "><%=posty.get(i).getOdps().get(a).getTresc()%></p>
                                                 </div>
                                             </div>
@@ -195,7 +200,9 @@
                             </div>
                             <%if(logged!=null){%>
                             <form action="/dodajodpowiedz">
+                                <center>
                                 <textarea id="tresc2" name="tresc2" rows="4" cols="50">odpowiedź</textarea>
+                                </center>
                                 <input type="hidden" id="author2" name="author2" value="<%=logged.getUsername()%>" />
                                 <input type="hidden" id="postid2" name="postid2" value="<%=posty.get(i).getId()%>" />
                                 <br>
@@ -377,6 +384,7 @@
                                             <p class ="fw-bold mb-0" style="margin-left: -10px;"><%=posty.get(i).getOdps().get(a).getAuthor()%></p>
                                             <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png" style="margin-left: -22px;">
                                                 <div style="margin-left: -10px;">
+                                                    <znacznik:mojZnacznik postid="<%=i%>" odpowiedzid="<%=a%>"/>
                                                     <p class=" mb-0, "><%=posty.get(i).getOdps().get(a).getTresc()%></p>
                                                 </div>
                                             </div>
@@ -389,12 +397,15 @@
                             </div>
                             <%if(logged!=null){%>
                             <form action="/dodajodpowiedz">
+                                <center>
                                 <textarea id="tresc" name="tresc" rows="4" cols="50">odpowiedź</textarea>
+                                </center>
                                 <input type="hidden" id="author" name="author" value="<%=logged.getUsername()%>" />
                                 <input type="hidden" id="postid" name="postid" value="<%=posty.get(i).getId()%>" />
                                 <br>
                                 <div class="modal-footer d-flex justify-content-center">
                                     <button type="submit" class="btn btn-primary">odpowiedz</button>
+
                                 </div>
                             </form>
                             <%}else{%>

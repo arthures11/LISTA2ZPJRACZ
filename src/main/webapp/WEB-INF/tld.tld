@@ -1,0 +1,21 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>mojaBiblioteka</short-name>
+    <uri>/WEB-INF/tld</uri>
+    <tag>
+        <name>mojZnacznik</name>
+        <tag-class>com.bryja.MojZnacznik</tag-class>
+        <body-content>tagdependent</body-content>
+        <attribute>
+            <name>postid</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>odpowiedzid</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>
