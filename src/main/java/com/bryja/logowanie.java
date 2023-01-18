@@ -21,7 +21,6 @@ public class logowanie extends HttpServlet {
         QueryHelpers helpers = new QueryHelpers();
         userzy = helpers.getUserList();
 
-
         for(int i=0;i<userzy.size();i++){
             if(userzy.get(i).getUsername().equals(key)){
                 if(userzy.get(i).getPassword().equals(pass)){

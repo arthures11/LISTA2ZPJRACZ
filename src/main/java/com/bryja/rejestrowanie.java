@@ -1,9 +1,15 @@
 package com.bryja;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +20,9 @@ public class rejestrowanie extends HttpServlet {
         String key = request.getParameter("name");
         String pass = request.getParameter("password");
         List<User> userzy = new ArrayList<>();
-        FileInputStream fi = new FileInputStream(new File("myObjects.ser"));
-        ObjectInputStream oi = new ObjectInputStream(fi);
-        try {
-            userzy = (List<User>) oi.readObject();
-       } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        oi.close();
-        fi.close();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        QueryHelpers helpers = new QueryHelpers();
+        userzy = helpers.getUserList();
 
 
         for(int i=0;i<userzy.size();i++){
@@ -34,16 +34,26 @@ public class rejestrowanie extends HttpServlet {
                 return;
             }
         }
-        userzy.add(new User(key,pass));
 
-        FileOutputStream f = new FileOutputStream(new File("myObjects.ser"));
-        ObjectOutputStream o = new ObjectOutputStream(f);
-        o.writeObject(userzy);
 
-        o.close();
-        f.close();
-        RequestDispatcher dispatcher = request.getSession().getServletContext()
-                .getRequestDispatcher("/home");
+        try {
+            Class.forName ("org.h2.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
+            Statement statement = connection.createStatement();
+            //"insert into users (id, password, username) values (default, 'testy', 'testy')";
+            String insertNewUser = "insert into users (id, password, username) values (default, ?, ?)";
+            PreparedStatement statement2 = connection.prepareStatement(insertNewUser);
+            statement2.setString(1, pass);
+            statement2.setString(2, key);
+            statement2.executeUpdate();
+            System.out.println("dodano usera nowego: "+key+"   "+pass);
+            connection.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        response.sendRedirect(request.getContextPath() + "/home");
     }
 
     @Override
