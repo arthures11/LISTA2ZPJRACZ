@@ -14,6 +14,7 @@ public class UserCheckFilter implements Filter {
     public void destroy() {
     }
 
+
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws ServletException, IOException {
         HttpServletResponse response = (HttpServletResponse) res;

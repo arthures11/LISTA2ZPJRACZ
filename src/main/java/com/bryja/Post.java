@@ -1,16 +1,38 @@
 package com.bryja;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Post implements Serializable {
-    int id;
-    String pytanie;
-    String author;
-    String data;
+@Entity
+@Table(name="post")
+public class Post{
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer id;
+    public String pytanie;
+
+    public String author;
+    public String data;
     int liczba_odpowiedzi;
-    List<Odpowiedzi> odps = new ArrayList<>();
+
+    @OneToMany(targetEntity=Odpowiedzi.class,cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, mappedBy = "post")
+    public List<Odpowiedzi> odps = new ArrayList<Odpowiedzi>();
+
+
+    public Post(Integer id, String pytanie, String author, String data, int liczba_odpowiedzi, List<Odpowiedzi> odps) {
+        this.id = id;
+        this.pytanie = pytanie;
+        this.author = author;
+        this.data = data;
+        this.liczba_odpowiedzi = liczba_odpowiedzi;
+        this.odps = odps;
+    }
+
 
     public String getPytanie() {
         return pytanie;
@@ -18,6 +40,20 @@ public class Post implements Serializable {
 
     public void setPytanie(String pytanie) {
         this.pytanie = pytanie;
+    }
+
+    public Post(){}
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Odpowiedzi> getOdps() {
+        return odps;
+    }
+
+    public void setOdps(List<Odpowiedzi> odps) {
+        this.odps = odps;
     }
 
     public String getAuthor() {
@@ -52,13 +88,7 @@ public class Post implements Serializable {
         this.liczba_odpowiedzi = liczba_odpowiedzi;
     }
 
-    public List<Odpowiedzi> getOdps() {
-        return odps;
-    }
 
-    public void setOdps(List<Odpowiedzi> odps) {
-        this.odps = odps;
-    }
 
     public Post(int id, String pytanie, String author, String data, int liczba_odpowiedzi) {
         this.pytanie = pytanie;

@@ -1,5 +1,7 @@
 package com.bryja;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -15,16 +17,11 @@ public class logowanie extends HttpServlet {
         String pass = request.getParameter("passwordlog");
 
         List<User> userzy = new ArrayList<>();
-        FileInputStream fi = new FileInputStream(new File("myObjects.ser"));
-        ObjectInputStream oi = new ObjectInputStream(fi);
-        try {
-            userzy = (List<User>) oi.readObject();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        Counter a = new Counter();
-        oi.close();
-        fi.close();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        QueryHelpers helpers = new QueryHelpers();
+        userzy = helpers.getUserList();
+
+
         for(int i=0;i<userzy.size();i++){
             if(userzy.get(i).getUsername().equals(key)){
                 if(userzy.get(i).getPassword().equals(pass)){

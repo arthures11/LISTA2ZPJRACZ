@@ -1,12 +1,19 @@
 package com.bryja;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "dodajodpowiedz", value = "/dodajodpowiedz")
@@ -21,24 +28,51 @@ public class dodajodpowiedz extends HttpServlet {
         String autor = request.getParameter("author");
         int id = Integer.parseInt(idpost);
         List<Post> posty = new ArrayList<>();
-        FileInputStream fi = new FileInputStream(new File("posts.ser"));
-        ObjectInputStream oi = new ObjectInputStream(fi);
-        try {
-            posty = (List<Post>) oi.readObject();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        List<Odpowiedzi> odpsy = new ArrayList<>();
+
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        QueryHelpers helpers = new QueryHelpers();
+        posty = helpers.getPostList();
+        odpsy = helpers.getodpsList();
+
+        List<Odpowiedzi> temp = new ArrayList<>();
+        for(int i=0;i<posty.size();i++){
+            temp.clear();
+            for(int j=0;j< odpsy.size();j++){
+                if(odpsy.get(j).PostID==posty.get(i).id){
+                    System.out.println("znalazlem");
+                    temp.add(odpsy.get(j));
+                }
+            }
+            posty.get(i).setOdps(temp);
+
         }
-        oi.close();
-        fi.close();
-        posty.get(id).getOdps().add(new Odpowiedzi(tresc,autor,dtf.format(now)));
-        posty.get(id).liczba_odpowiedzi++;
+       // posty.get(id).getOdps().add(new Odpowiedzi(tresc,autor,dtf.format(now)));
+       // posty.get(id).liczba_odpowiedzi++;
 
-         FileOutputStream f = new FileOutputStream(new File("posts.ser"));
-         ObjectOutputStream o = new ObjectOutputStream(f);
-         o.writeObject(posty);
+        Date date = new Date();
+        try {
+            Class.forName ("org.h2.Driver");
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
+            Statement statement = connection.createStatement();
+            String inserOdp = "insert into odpowiedzi (id, odp_author, tresc,odp_data,ocena,ilosc_ocen,suma_ocen,postID) values (default, ?, ?, ?, 0, 0, 0, ?)";
+            PreparedStatement statement2 = connection.prepareStatement(inserOdp);
+            statement2.setString(1, autor);
+            statement2.setString(2, tresc);
+            statement2.setString(3, date.toString());
+            statement2.setInt(4, Integer.parseInt(idpost));
+            statement2.executeUpdate();
 
-         o.close();
-         f.close();
+            String updatePost = "UPDATE post SET liczba_odpowiedzi = liczba_odpowiedzi + 1 WHERE postID = ?";
+            PreparedStatement statement3 = connection.prepareStatement(updatePost);
+            statement3.setInt(1, id);
+            statement3.executeUpdate();
+            connection.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
         response.sendRedirect(request.getContextPath() + "/home");
 
     }

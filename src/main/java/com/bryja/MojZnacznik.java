@@ -1,5 +1,7 @@
 package com.bryja;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -24,19 +26,25 @@ public class MojZnacznik extends SimpleTagSupport {
     public void doTag() throws JspException {
         JspWriter out = getJspContext().getOut();
         List<Post> posty = new ArrayList<>();
-        try {
-            FileInputStream fi = new FileInputStream(new File("posts.ser"));
-            ObjectInputStream oi = new ObjectInputStream(fi);
-            try {
-                posty = (List<Post>) oi.readObject();
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+        List<Odpowiedzi> odpsy = new ArrayList<>();
+
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        QueryHelpers helpers = new QueryHelpers();
+        posty = helpers.getPostList();
+        odpsy = helpers.getodpsList();
+
+        List<Odpowiedzi> temp = new ArrayList<>();
+        for(int i=0;i<posty.size();i++){
+            temp.clear();
+            for(int j=0;j< odpsy.size();j++){
+                if(odpsy.get(j).PostID==posty.get(i).getId()){
+                    System.out.println("znalazlem");
+                    temp.add(odpsy.get(j));
+                }
             }
-            oi.close();
-            fi.close();
-        }
-        catch (Exception e){
-            throw new RuntimeException(e);
+            posty.get(i).setOdps(temp);
+
         }
 
         try {
