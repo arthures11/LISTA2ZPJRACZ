@@ -34,16 +34,17 @@ public class MojZnacznik extends SimpleTagSupport {
         posty = helpers.getPostList();
         odpsy = helpers.getodpsList();
 
-        List<Odpowiedzi> temp = new ArrayList<>();
+       // List<Odpowiedzi> temp = new ArrayList<>();
         for(int i=0;i<posty.size();i++){
-            temp.clear();
+         //   temp.clear();
             for(int j=0;j< odpsy.size();j++){
                 if(odpsy.get(j).PostID==posty.get(i).getId()){
-                    System.out.println("znalazlem");
-                    temp.add(odpsy.get(j));
+                   // System.out.println("znalazlem");
+                    //temp.add(odpsy.get(j));
+                    posty.get(i).odps.add(odpsy.get(j));
                 }
             }
-            posty.get(i).setOdps(temp);
+           // posty.get(i).setOdps(temp);
 
         }
 
